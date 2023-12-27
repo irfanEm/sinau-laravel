@@ -8,7 +8,7 @@ use App\Data\Balqis;
 
 class Farah
 {
-    private Balqis $balqis;
+    public Balqis $balqis;
 
     public function __construct(Balqis $balqis)
     {

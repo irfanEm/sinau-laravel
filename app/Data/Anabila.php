@@ -6,8 +6,8 @@ namespace App\Data;
 
 class Anabila
 {
-    private Balqis $balqis;
-    private Farah $farah;
+    public Balqis $balqis;
+    public Farah $farah;
 
     public function __construct(Balqis $balqis, Farah $farah)
     {
