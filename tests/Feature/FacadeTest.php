@@ -18,5 +18,17 @@ class FacadeTest extends TestCase
         $config2 = Config::get('contoh.nama.depan');
 
         self::assertEquals($config1, $config2, $config3);
+
+        var_dump($cnfg->all());
+    }
+
+    public function testConfigMock()
+    {
+        Config::shouldReceive('get')
+        ->with('contoh.nama.depan')
+        ->andReturn('Halo Balqis Farah Anabila');
+
+        $HaloBalqis = Config::get('contoh.nama.depan');
+        self::assertEquals('Halo Balqis Farah Anabila', $HaloBalqis);
     }
 }
