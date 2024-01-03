@@ -19,7 +19,7 @@ class BalqisProviders extends ServiceProvider implements DeferrableProvider
 
     public function register()
     {
-        echo "Balqis Farah Anabila Providers";
+        // echo "Balqis Farah Anabila Providers";
     
         $this->app->singleton(Balqis::class, function($app){
             return new Balqis();

@@ -56,4 +56,31 @@ class RoutingTest extends TestCase
         $this->get('/categories/ups')
         ->assertSeeText('404 : Rak Ketemu !');
     }
+
+    public function testRouteOptionalParam()
+    {
+        $this->get('/users/prganyrn')
+            ->assertSeeText('Hai prganyrn');
+
+        $this->get('/users/')
+            ->assertSeeText('Hai kamu');
+    }
+
+    public function testRouteKonflik()
+    {
+        $this->get('/konflik/balqis')
+        ->assertSeeText('Hallo balqis');
+
+        $this->get('/konflik/irfan')
+        ->assertSeeText('Hai Irfan Machmud');
+    }
+
+    public function testRouteName()
+    {
+        $this->get('/product/1133')
+        ->assertSeeText('Link : http://localhost/produks/1133');
+
+        $this->get('/product-redirect/1133')
+        ->assertRedirect('/produks/1133');
+    }
 }
