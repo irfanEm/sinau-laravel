@@ -3,6 +3,7 @@
 use App\Http\Controllers\HaiController;
 use App\Http\Controllers\InputController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Console\Input\Input;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,3 +83,7 @@ Route::get('/controller/hai/{nama}', [HaiController::class, 'HaiNama']);
 
 Route::get('/request/input', [InputController::class, 'halo'])->name('input.get');
 Route::post('/request/input', [InputController::class, 'halo'])->name('input.post');
+Route::post('/request/input/namadepan', [InputController::class, 'haloFirst'])->name('input.nested');
+Route::post('/request/input/semua', [InputController::class, 'inputAll'])->name('input.semua');
+Route::post('/request/input/array', [InputController::class, 'inputArray'])->name('input.array');
+Route::post('/request/input/tipe', [InputController::class, 'inputType'])->name('input.tipe');
