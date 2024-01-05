@@ -72,4 +72,33 @@ class InputControllerTest extends TestCase
             "tgl_lahir" => "17-03-2003"
         ])->assertSeeText('Shilvia Qurrota Ayun')->assertSeeText('true')->assertSeeText('17-03-2003');
     }
+
+    public function testInputOnly()
+    {
+        $this->post('/request/input/only',[
+            "nama" => [
+                "depan" => "Shilvia",
+                "tengah" => "Qurrota",
+                "belakang" => "Ayun"
+            ]
+        ])->assertSeeText('Shilvia')->assertSeeText('Ayun')->assertDontSeeText('Qurrota');
+    }
+
+    public function testInputExcept()
+    {
+        $this->post('/request/input/except',[
+            "username" => "irfan_em",
+            "password" => "rahasia_ilahi",
+            "admin" => "true"
+        ])->assertSeeText('rahasia_ilahi')->assertSeeText('irfan_em')->assertDontSeeText('admin');
+    }
+
+    public function testInputMerge()
+    {
+        $this->post('/request/input/merge',[
+            "username" => "irfan_em",
+            "password" => "rahasia_ilahi",
+            "admin" => "true"
+        ])->assertSeeText('rahasia_ilahi')->assertSeeText('irfan_em')->assertSeeText('admin')->assertSeeText('false');
+    }
 }

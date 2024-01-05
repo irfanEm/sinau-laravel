@@ -87,3 +87,6 @@ Route::post('/request/input/namadepan', [InputController::class, 'haloFirst'])->
 Route::post('/request/input/semua', [InputController::class, 'inputAll'])->name('input.semua');
 Route::post('/request/input/array', [InputController::class, 'inputArray'])->name('input.array');
 Route::post('/request/input/tipe', [InputController::class, 'inputType'])->name('input.tipe');
+Route::post('/request/input/only', [InputController::class, 'inputOnly'])->name('input.only');
+Route::post('/request/input/except', [InputController::class, 'inputExcept'])->name('input.except');
+Route::post('/request/input/merge', [InputController::class, 'inputMerge'])->name('input.merge');
