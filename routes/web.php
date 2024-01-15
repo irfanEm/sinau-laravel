@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\HaiController;
 use App\Http\Controllers\InputController;
+use App\Http\Controllers\ResponseController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Console\Input\Input;
 
@@ -90,3 +92,7 @@ Route::post('/request/input/tipe', [InputController::class, 'inputType'])->name(
 Route::post('/request/input/only', [InputController::class, 'inputOnly'])->name('input.only');
 Route::post('/request/input/except', [InputController::class, 'inputExcept'])->name('input.except');
 Route::post('/request/input/merge', [InputController::class, 'inputMerge'])->name('input.merge');
+
+Route::post('/file/upload', [FileController::class, 'upload'])->name('upload.file');
+Route::get('/response/hallo', [ResponseController::class, 'response'])->name('response.hallo');
+Route::get('/response/header', [ResponseController::class, 'header'])->name('response.header');
