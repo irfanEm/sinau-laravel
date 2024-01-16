@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CookieController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HaiController;
 use App\Http\Controllers\InputController;
@@ -100,3 +101,7 @@ Route::get('/response/view', [ResponseController::class, 'responseView'])->name(
 Route::get('/response/json', [ResponseController::class, 'responseJson'])->name('response.json');
 Route::get('/response/file', [ResponseController::class, 'responseFile'])->name('response.file');
 Route::get('/response/download', [ResponseController::class, 'responseFileDownload'])->name('response.download');
+
+Route::get('/cookie/set', [CookieController::class, 'setCookie'])->name('cookie.set');
+Route::get('/cookie/get', [CookieController::class, 'getCookie'])->name('cookie.get');
+Route::get('/cookie/clear', [CookieController::class, 'clearCookie'])->name('cookie.clear');
