@@ -33,8 +33,8 @@ class CookieControllerTest extends TestCase
         ->withCookie('Is-Member', '')
         ->get('/cookie/get')
         ->assertJson([
-            'User-Id' => 'tamu',
-            'Is-Member' => 'false'
+            'User-Id' => '',
+            'Is-Member' => ''
         ]);
     }
 }
