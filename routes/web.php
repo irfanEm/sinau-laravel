@@ -33,13 +33,13 @@ Route::fallback(function(){
 })->name('fallback');
 
 Route::view('/perkenalan', 'tentang.kulo', [
-        'nama' => 'Programer Anyaran Cilacap', 
+        'nama' => 'Programer Anyaran Cilacap',
         'judul' => 'Tentang kulo'
     ])->name('tentang.kulo');
 
 Route::get('/perkenalan2', function(){
     return view('tentang.kulo', [
-        'nama' => 'Programer Anyaran Cilacap', 
+        'nama' => 'Programer Anyaran Cilacap',
         'judul' => 'Tentang kulo'
     ]);
 })->name('tentang.kulo2');
@@ -96,3 +96,7 @@ Route::post('/request/input/merge', [InputController::class, 'inputMerge'])->nam
 Route::post('/file/upload', [FileController::class, 'upload'])->name('upload.file');
 Route::get('/response/hallo', [ResponseController::class, 'response'])->name('response.hallo');
 Route::get('/response/header', [ResponseController::class, 'header'])->name('response.header');
+Route::get('/response/view', [ResponseController::class, 'responseView'])->name('response.view');
+Route::get('/response/json', [ResponseController::class, 'responseJson'])->name('response.json');
+Route::get('/response/file', [ResponseController::class, 'responseFile'])->name('response.file');
+Route::get('/response/download', [ResponseController::class, 'responseFileDownload'])->name('response.download');
