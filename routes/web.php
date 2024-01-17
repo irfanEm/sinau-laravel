@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\CookieController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\HaiController;
-use App\Http\Controllers\InputController;
-use App\Http\Controllers\ResponseController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HaiController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\InputController;
+use App\Http\Controllers\CookieController;
 use Symfony\Component\Console\Input\Input;
+use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\ResponseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,3 +106,12 @@ Route::get('/response/download', [ResponseController::class, 'responseFileDownlo
 Route::get('/cookie/set', [CookieController::class, 'setCookie'])->name('cookie.set');
 Route::get('/cookie/get', [CookieController::class, 'getCookie'])->name('cookie.get');
 Route::get('/cookie/clear', [CookieController::class, 'clearCookie'])->name('cookie.clear');
+
+Route::get('/redirect/from', [RedirectController::class, 'redirectFrom'])->name('redirect.from');
+Route::get('/redirect/to', [RedirectController::class, 'redirectTo'])->name('redirect.to');
+Route::get('/redirect/nama', [RedirectController::class, 'redirectName'])->name('redirect.name');
+Route::get('/redirect/hai/{nama}', [RedirectController::class, 'redirectHai'])->name('redirect.hai');
+Route::get('/redirect/action', [RedirectController::class, 'redirectAction'])->name('redirect.action');
+Route::get('/redirect/away', [RedirectController::class, 'redirectAway'])->name('redirect.away');
+
+Route::get('/middlewari/contoh')->name('middleware.contoh');
