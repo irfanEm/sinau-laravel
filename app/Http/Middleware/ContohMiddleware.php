@@ -14,14 +14,14 @@ class ContohMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, string $key, int $status)
     {
         $apiKey = $request->header('X-API-PRGANYRN');
-        if($apiKey == 'Balqis_FA')
+        if($apiKey == $key)
         {
             return $next($request);
         }else{
-            return response('Akses Dilarang', 401);
+            return response('Akses Dilarang', $status);
         }
     }
 }

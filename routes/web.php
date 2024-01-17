@@ -5,9 +5,11 @@ use App\Http\Controllers\HaiController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\CookieController;
+use App\Http\Controllers\FormController;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\ResponseController;
+use App\Http\Middleware\VerifyCsrfToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,7 +97,7 @@ Route::post('/request/input/only', [InputController::class, 'inputOnly'])->name(
 Route::post('/request/input/except', [InputController::class, 'inputExcept'])->name('input.except');
 Route::post('/request/input/merge', [InputController::class, 'inputMerge'])->name('input.merge');
 
-Route::post('/file/upload', [FileController::class, 'upload'])->name('upload.file');
+Route::post('/file/upload', [FileController::class, 'upload'])->name('upload.file')->withoutMiddleware(VerifyCsrfToken::class);
 Route::get('/response/hallo', [ResponseController::class, 'response'])->name('response.hallo');
 Route::get('/response/header', [ResponseController::class, 'header'])->name('response.header');
 Route::get('/response/view', [ResponseController::class, 'responseView'])->name('response.view');
@@ -114,4 +116,8 @@ Route::get('/redirect/hai/{nama}', [RedirectController::class, 'redirectHai'])->
 Route::get('/redirect/action', [RedirectController::class, 'redirectAction'])->name('redirect.action');
 Route::get('/redirect/away', [RedirectController::class, 'redirectAway'])->name('redirect.away');
 
-Route::get('/middlewari/contoh')->name('middleware.contoh');
+Route::get('/middleware/contoh', function(){ return "Aman."; })->name('middleware.contoh')->middleware('contoh:Balqis_FA, 401');
+Route::get('/middleware/grup', function(){ return "Grup."; })->name('middleware.grup')->middleware('prganyrn');
+
+Route::get('/form', [FormController::class, 'getForm'])->name('form.get');
+Route::post('/form', [FormController::class, 'postForm'])->name('form.post');
