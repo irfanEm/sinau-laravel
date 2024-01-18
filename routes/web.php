@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,37 +88,65 @@ Route::get('/controller/request', [HaiController::class, 'request']);
 
 Route::get('/controller/hai/{nama}', [HaiController::class, 'HaiNama']);
 
-Route::get('/request/input', [InputController::class, 'halo'])->name('input.get');
-Route::post('/request/input', [InputController::class, 'halo'])->name('input.post');
-Route::post('/request/input/namadepan', [InputController::class, 'haloFirst'])->name('input.nested');
-Route::post('/request/input/semua', [InputController::class, 'inputAll'])->name('input.semua');
-Route::post('/request/input/array', [InputController::class, 'inputArray'])->name('input.array');
-Route::post('/request/input/tipe', [InputController::class, 'inputType'])->name('input.tipe');
-Route::post('/request/input/only', [InputController::class, 'inputOnly'])->name('input.only');
-Route::post('/request/input/except', [InputController::class, 'inputExcept'])->name('input.except');
-Route::post('/request/input/merge', [InputController::class, 'inputMerge'])->name('input.merge');
+Route::prefix('/request')->group(function(){
+    Route::get('/input', [InputController::class, 'halo'])->name('input.get');
+    Route::post('/input', [InputController::class, 'halo'])->name('input.post');
+    Route::post('/input/namadepan', [InputController::class, 'haloFirst'])->name('input.nested');
+    Route::post('/input/semua', [InputController::class, 'inputAll'])->name('input.semua');
+    Route::post('/input/array', [InputController::class, 'inputArray'])->name('input.array');
+    Route::post('/input/tipe', [InputController::class, 'inputType'])->name('input.tipe');
+    Route::post('/input/only', [InputController::class, 'inputOnly'])->name('input.only');
+    Route::post('/input/except', [InputController::class, 'inputExcept'])->name('input.except');
+    Route::post('/input/merge', [InputController::class, 'inputMerge'])->name('input.merge');
+});
 
 Route::post('/file/upload', [FileController::class, 'upload'])->name('upload.file')->withoutMiddleware(VerifyCsrfToken::class);
-Route::get('/response/hallo', [ResponseController::class, 'response'])->name('response.hallo');
-Route::get('/response/header', [ResponseController::class, 'header'])->name('response.header');
-Route::get('/response/view', [ResponseController::class, 'responseView'])->name('response.view');
-Route::get('/response/json', [ResponseController::class, 'responseJson'])->name('response.json');
-Route::get('/response/file', [ResponseController::class, 'responseFile'])->name('response.file');
-Route::get('/response/download', [ResponseController::class, 'responseFileDownload'])->name('response.download');
 
-Route::get('/cookie/set', [CookieController::class, 'setCookie'])->name('cookie.set');
-Route::get('/cookie/get', [CookieController::class, 'getCookie'])->name('cookie.get');
-Route::get('/cookie/clear', [CookieController::class, 'clearCookie'])->name('cookie.clear');
+Route::prefix('/response')->group(function(){
+    Route::get('/hallo', [ResponseController::class, 'response'])->name('response.hallo');
+    Route::get('/header', [ResponseController::class, 'header'])->name('response.header');
+    Route::get('/view', [ResponseController::class, 'responseView'])->name('response.view');
+    Route::get('/json', [ResponseController::class, 'responseJson'])->name('response.json');
+    Route::get('/file', [ResponseController::class, 'responseFile'])->name('response.file');
+    Route::get('/download', [ResponseController::class, 'responseFileDownload'])->name('response.download');
+});
 
-Route::get('/redirect/from', [RedirectController::class, 'redirectFrom'])->name('redirect.from');
-Route::get('/redirect/to', [RedirectController::class, 'redirectTo'])->name('redirect.to');
-Route::get('/redirect/nama', [RedirectController::class, 'redirectName'])->name('redirect.name');
-Route::get('/redirect/hai/{nama}', [RedirectController::class, 'redirectHai'])->name('redirect.hai');
-Route::get('/redirect/action', [RedirectController::class, 'redirectAction'])->name('redirect.action');
-Route::get('/redirect/away', [RedirectController::class, 'redirectAway'])->name('redirect.away');
+Route::prefix('/cookie')->group(function(){
+    Route::get('/set', [CookieController::class, 'setCookie'])->name('cookie.set');
+    Route::get('/get', [CookieController::class, 'getCookie'])->name('cookie.get');
+    Route::get('/clear', [CookieController::class, 'clearCookie'])->name('cookie.clear');
+});
 
-Route::get('/middleware/contoh', function(){ return "Aman."; })->name('middleware.contoh')->middleware('contoh:Balqis_FA, 401');
-Route::get('/middleware/grup', function(){ return "Grup."; })->name('middleware.grup')->middleware('prganyrn');
+Route::prefix('/redirect')->controller(RedirectController::class)->group(function(){
+    Route::get('/from', 'redirectFrom')->name('redirect.from');
+    Route::get('/to', 'redirectTo')->name('redirect.to');
+    Route::get('/nama', 'redirectName')->name('redirect.name');
+    Route::get('/hai/{nama}', 'redirectHai')->name('redirect.hai');
+    Route::get('/action', 'redirectAction')->name('redirect.action');
+    Route::get('/away', 'redirectAway')->name('redirect.away');
+});
 
-Route::get('/form', [FormController::class, 'getForm'])->name('form.get');
-Route::post('/form', [FormController::class, 'postForm'])->name('form.post');
+Route::middleware(['contoh:Balqis_FA, 401'])->prefix('/middleware')->group(function(){
+    Route::get('/contoh', function(){ return "Aman."; })->name('middleware.contoh');
+    Route::get('/grup', function(){ return "Grup."; })->name('middleware.grup');
+});
+
+Route::controller(FormController::class)->group(function(){
+    Route::get('/form', 'getForm')->name('form.get');
+    Route::post('/form', 'postForm')->name('form.post');
+});
+
+Route::get('/url/current', function(){
+    return URL::full();
+});
+Route::get('/url/named', function(){
+    // return route('redirect.hai', ['nama' => 'Balqis_FA']);
+    // return url()->route('redirect.hai', ['nama' => 'Balqis_FA']);
+    return URL::route('redirect.hai', ['nama' => 'Balqis_FA']);
+});
+
+Route::get('/url/action', function(){
+    // return action([FormController::class, 'getForm']);
+    // return url()->action([FormController::class, 'getForm']);
+    return URL::action([FormController::class, 'getForm']);
+});
