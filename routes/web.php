@@ -9,7 +9,9 @@ use App\Http\Controllers\FormController;
 use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\ResponseController;
+use App\Http\Controllers\SessionController;
 use App\Http\Middleware\VerifyCsrfToken;
+use GuzzleHttp\Cookie\SessionCookieJar;
 use Illuminate\Support\Facades\URL;
 
 /*
@@ -149,4 +151,13 @@ Route::get('/url/action', function(){
     // return action([FormController::class, 'getForm']);
     // return url()->action([FormController::class, 'getForm']);
     return URL::action([FormController::class, 'getForm']);
+});
+
+Route::prefix('/session')->controller(SessionController::class)->group(function(){
+    Route::get('/buat', 'buatSession')->name('buat.session');
+    Route::get('/get', 'getSession')->name('get.session');
+});
+
+Route::get('/error/contoh', function(){
+    throw new Exception('Contoh Error !');
 });
