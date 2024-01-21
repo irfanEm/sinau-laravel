@@ -1,17 +1,16 @@
 <?php
 
+use App\Exceptions\ValidationException;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HaiController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\FormController;
-use Symfony\Component\Console\Input\Input;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\SessionController;
 use App\Http\Middleware\VerifyCsrfToken;
-use GuzzleHttp\Cookie\SessionCookieJar;
 use Illuminate\Support\Facades\URL;
 
 /*
@@ -141,6 +140,7 @@ Route::controller(FormController::class)->group(function(){
 Route::get('/url/current', function(){
     return URL::full();
 });
+
 Route::get('/url/named', function(){
     // return route('redirect.hai', ['nama' => 'Balqis_FA']);
     // return url()->route('redirect.hai', ['nama' => 'Balqis_FA']);
@@ -160,4 +160,24 @@ Route::prefix('/session')->controller(SessionController::class)->group(function(
 
 Route::get('/error/contoh', function(){
     throw new Exception('Contoh Error !');
+});
+Route::get('/error/manual', function(){
+    report(new Exception('Manual Reporting.'));
+    return "OK !";
+});
+
+Route::get('/error/validation', function(){
+    throw new ValidationException("Validasi Error");
+});
+
+Route::get('/abort/400', function(){
+    abort(400, "Oh tidak validasi error.");
+});
+
+Route::get('/abort/401', function(){
+    abort(401);
+});
+
+Route::get('/abort/500', function(){
+    abort(500);
 });
